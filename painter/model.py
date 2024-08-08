@@ -26,14 +26,26 @@ class Circle:
         return f"Circle  with self.center at ({self.center.x}, {self.center.y}) and radius{self.radius}"
 
 
-
-
 class Triangle:
     def __init__(self, point_1: Point, point_2: Point, point_3: Point):
         self.point_1: Point = point_1
         self.point_2: Point = point_2
         self.point_3: Point = point_3
 
-    @staticmethod
-    def area(point_1: Point, point_2: float) -> float:
-        return math.pi * radius ** 2
+    def area(self) -> float:
+        return 0.5 * abs(self.point_1.x * self.point_2.y - self.point_1.x * self.point_3.y) + \
+            (self.point_2.x * self.point_3.y - self.point_2.x * self.point_1.y) + \
+            (self.point_3.x * self.point_1.y - self.point_3.x * self.point_2.y)
+
+    def draw(self):
+        x = [self.point_1.x, self.point_2.x, self.point_3.x, self.point_1.x]
+        y = [self.point_1.y, self.point_2.y, self.point_3.y, self.point_1.y]
+        plt.fill(x, y, color='b')
+        plt.axis("scaled")
+        plt.show()
+
+    def __str__(self)-> str:
+        return f"Triangle with vertices at ({self.point_1.x}, {self.point_1.y}), ({self.point_2.x}, {self.point_2.y})\
+                and ({self.point_3.x}, {self.point_3.y})"
+
+
