@@ -3,9 +3,10 @@ import math
 from matplotlib import pyplot as plt
 
 class Point:
+
     def __init__(self, x: float, y: float):
-        self.x: float = 2.5
-        self.y: float = 4.7
+        self.x: float = x
+        self.y: float = y
 
 
 class Circle:
@@ -23,8 +24,7 @@ class Circle:
         plt.show()
 
     def __str__(self) -> str:
-        return f"Circle  with self.center at ({self.center.x}, {self.center.y}) and radius{self.radius}"
-
+        return f"Circle with center at ({self.center.x}, {self.center.y}) and radius {self.radius}"
 
 class Triangle:
     def __init__(self, point_1: Point, point_2: Point, point_3: Point):
@@ -33,9 +33,9 @@ class Triangle:
         self.point_3: Point = point_3
 
     def area(self) -> float:
-        return 0.5 * abs(self.point_1.x * self.point_2.y - self.point_1.x * self.point_3.y) + \
-            (self.point_2.x * self.point_3.y - self.point_2.x * self.point_1.y) + \
-            (self.point_3.x * self.point_1.y - self.point_3.x * self.point_2.y)
+        return 0.5 * abs((self.point_1.x * self.point_2.y - self.point_1.x * self.point_3.y) +
+            (self.point_2.x * self.point_3.y - self.point_2.x * self.point_1.y) +
+            (self.point_3.x * self.point_1.y - self.point_3.x * self.point_2.y))
 
     def draw(self):
         x = [self.point_1.x, self.point_2.x, self.point_3.x, self.point_1.x]
@@ -45,7 +45,7 @@ class Triangle:
         plt.show()
 
     def __str__(self)-> str:
-        return f"Triangle with vertices at ({self.point_1.x}, {self.point_1.y}), ({self.point_2.x}, {self.point_2.y}) "\
+        return f"Triangle with vertices at ({self.point_1.x}, {self.point_1.y}), ({self.point_2.x}, {self.point_2.y}), "\
                 f"and ({self.point_3.x}, {self.point_3.y})"
 
 
