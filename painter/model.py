@@ -1,6 +1,6 @@
-from matplotlib import pyplot as plt
+import pickle
 import math
-
+from matplotlib import pyplot as plt
 
 class Point:
     def __init__(self, x: float, y: float):
@@ -45,7 +45,57 @@ class Triangle:
         plt.show()
 
     def __str__(self)-> str:
-        return f"Triangle with vertices at ({self.point_1.x}, {self.point_1.y}), ({self.point_2.x}, {self.point_2.y})\
-                and ({self.point_3.x}, {self.point_3.y})"
+        return f"Triangle with vertices at ({self.point_1.x}, {self.point_1.y}), ({self.point_2.x}, {self.point_2.y}) "\
+                f"and ({self.point_3.x}, {self.point_3.y})"
 
+
+class Rectangle:
+
+    def __init__(self,point_1: Point, point_2: Point):
+        self.point_1: Point = point_1
+        self.point_2: Point = point_2
+
+    def area(self) -> float:
+        return abs((self.point_1.x - self.point_2.x) * (self.point_1.y - self.point_2.y))
+
+    def draw(self):
+        x = [self.point_1.x, self.point_2.x, self.point_2.x, self.point_1.x, self.point_1.x]
+        y = [self.point_1.y, self.point_1.y, self.point_2.y, self.point_2.y, self.point_1.y]
+        plt.fill(x, y, color='g')
+        plt.axis("scaled")
+        plt.show()
+
+    def __str__(self) -> str:
+        return f"Rectangle with vertices at ({self.point_1.x}, {self.point_1.y}) and ({self.point_2.x}, " \
+                f"{self.point_2.y})"
+
+
+class Painter:
+    FILE = ".painter"
+
+    def __init__(self) -> None:
+        self.shapes: list = []
+        self._load()
+
+    def _load(self) -> None:
+        try:
+            with open(Painter.FILE, "rb") as f:
+                self.shapes = pickle.load(f)
+        except (EOFError, FileNotFoundError):
+            self.shapes = []
+
+    def _save(self) -> None:
+        with open(Painter.FILE, "wb") as f:
+            pickle.dump(self.shapes, f)
+
+    def add_shape(self, shape) -> None:
+        self.shapes.append(shape)
+        self._save()
+
+    def total_area(self) -> float:
+        return sum(shape.area() for shape in self.shapes)
+
+    def clear(self) -> None:
+        self.shapes = []
+        self._save()
 
